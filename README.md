@@ -117,11 +117,12 @@ How do we test **injectivity**? Well we need to get all the possible outputs for
 # Hash set of seen outputs i.e. the image of the domain for the nerds out there
 seen_outputs = set()
 for s in domain:
+    output = relation(s)
     # Test if we have seen it before
-    if relation(s) in seen_outputs:
+    if output in seen_outputs:
         types["injective"] = False
 
-    seen_outputs.add(relation(s))
+    seen_outputs.add(output)
 ```
 Notice that we could terminate the loop once we found a repeated output, but we don't. This is because seen outputs is useful later on for our surjectivity test.
 

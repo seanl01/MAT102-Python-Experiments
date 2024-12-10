@@ -15,10 +15,11 @@ def test_fn_type(domain: Set[Any], codomain: Set[Any], relation: Callable[[Any],
     # Test injectivity
     seen_outputs = set()
     for s in domain:
-        if relation(s) in seen_outputs:
+        output = relation(s)
+        if output in seen_outputs:
             types["injective"] = False
 
-        seen_outputs.add(relation(s))
+        seen_outputs.add(output)
 
     # Test surjectivity
     types["surjective"] = seen_outputs == codomain
