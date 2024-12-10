@@ -1,4 +1,4 @@
-# MAT102 Experiments in Python
+# MAT102 Experiments in Python 🐍 ✖️ 🧮
 This repository contains some experiments I did for my own exploration and fun, to see if I could use code to represent some of the mathematical concepts I learned in my _MAT102: Introduction to Mathematical Proofs_ course during my exchange program in the University of Toronto Mississauga.
 
 You can find some great lecture notes by Prof Tyler Holden from the course [here](http://home.tykenho.com/index.html?notes).
@@ -27,13 +27,16 @@ Recursively defined sets are often infinite, and it seemed fitting to use genera
 Recursively defined sets start with basis elements, and some defined constructor function(s) which create new elements from old elements. It seemed fitting to allow the user to pass in a list of lambda functions which would take in a single element $x$ or a pair of elements $(x, y)$ and yield a new object.
 
 Say $A$ is a recursively defined set:
+
 $$
+\begin{align}
 x, y \in A \\
 x + 2y \in A \\
 x - y \in A \\
 c_1, c_2: (A \times A) \rightarrow A \\
 c_1((x, y)) = x + 2y \\
 c_2((x, y)) = x - y
+\end{align}
 $$
 
 > Here, if $x$ and $y$ are in set $A$, then $x + 2y$ is also in set $A$ can also be given as a constructor function mapping from $(A \times A)$ to $A$ which produces the new elements
