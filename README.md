@@ -1,4 +1,4 @@
-# MAT102 Experiments in Python
+# MAT102 Experiments in Python 🐍 ✖️ 🧮
 This repository contains some experiments I did for my own exploration and fun, to see if I could use code to represent some of the mathematical concepts I learned in my _MAT102: Introduction to Mathematical Proofs_ course during my exchange program in the University of Toronto Mississauga.
 
 You can find some great lecture notes by Prof Tyler Holden from the course [here](http://home.tykenho.com/index.html?notes).
