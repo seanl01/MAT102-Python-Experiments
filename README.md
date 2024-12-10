@@ -1,7 +1,11 @@
 # MAT102 Experiments in Python
-This repository contains some experiments I did for my own exploration and fun, to see if I could use code to represent some of the mathematical concepts I learned in my _Introduction to Mathematical Proofs_ course during my exchange program in the University of Toronto.
+This repository contains some experiments I did for my own exploration and fun, to see if I could use code to represent some of the mathematical concepts I learned in my _MAT102: Introduction to Mathematical Proofs_ course during my exchange program in the University of Toronto Mississauga.
+
+You can find some great lecture notes by Prof Tyler Holden from the course [here](http://home.tykenho.com/index.html?notes).
 
 ## Recursively defined sets in Python
+> Code found in [recursive_set.py](recursive_set.py). The code is not optimised, and contains redundant union operations which are thankfully idempotent. It's more of a proof of concept but one day I may take the time to optimise it!
+
 During the course we discussed recursively defined sets, sequences and how to perform structural induction on these types of mathematical objects.
 
 This prompted me to experiment with recursively defined sets in Python code, and it proved to be an interesting mental exercise trying to represent the constructors in code.
@@ -69,6 +73,8 @@ for item in items:
 > The last part should be proved using structural induction, but it's just an interesting idea that one can test assumptions using a recursively defined set. It may have some useful applications for quick empirical testing when formal methods might be difficult.
 
 ## Function Properties
+> Code found in [fn_prop_tester.py](fn_prop_tester.py)
+
 During the course, we also learned about injections, surjections, and bijections. I wanted to see if I could use the properties I learned to test injectivity, surjectivity, and bijectivity given a domain, codomain, and a relation in code.
 
 We learn that given a function $f: A \rightarrow B$, if for $x, y \in A$, $f(x) = f(y)$, then if $x = y$, $f$ is __injective__. In simpler terms, this means that every possible input in the function produces a unique output. If two inputs produce the same output, that means they are equal.
@@ -93,15 +99,54 @@ def relation(s):
         return s * 3
     return 10
 
+# See what properties our function fulfills
 test_fn_type(S, T, relation)
 >> {'injective': False, 'surjective': True, 'bijective': False}
 ```
-
-How do we conclude these properties? The easiest one to conclude is bijectivity. If either injectivity or surjectivity is false, then bijectivity is false.
+What's behind `test_fn_type`? First, we see that we output the properties of the provided function using a dictionary which is initialised as so:
 
 ```py
-
+types = {'injective': True, 'surjective': True, 'bijective': False}
 ```
+
+Now how do we evaluate the properties? Let's start with __injectivity__.
+
+How do we test **injectivity**? Well we need to get all the possible outputs for all the inputs we have in $S$, and make sure none of them are equal to one another. Every input should have a unique output. Let's test this using a hash set of the outputs we have already seen. If we repeat even one of these, we are not injective.
+
+```py
+# Hash set of seen outputs i.e. the image of the domain for the nerds out there
+seen_outputs = set()
+for s in domain:
+    # Test if we have seen it before
+    if relation(s) in seen_outputs:
+        types["injective"] = False
+
+    seen_outputs.add(relation(s))
+```
+Notice that we could terminate the loop once we found a repeated output, but we don't. This is because seen outputs is useful later on for our surjectivity test.
+
+For a function to be surjective, we must be able to produce all the possible outputs that are in the codomain $T$, so whatever outputs we have created in `seen_outputs` should be equal to the entire codomain $T$
+
+```py
+types["surjective"] = seen_outputs == codomain
+```
+
+> Python implements an internal equality check method for the `Set` type to check for set equality
+
+The easiest one to conclude is bijectivity. If either injectivity or surjectivity is false, then bijectivity is false.
+
+After testing the former two, a simple `and` check suffices. So we can put this last.
+
+```py
+types["bijective"] = types["injective"] and types["surjective"]
+```
+
+With relatively simple logic, we can now tell if a given function is injective, surjective, and/or bijective!
+
+
+
+
+
 
 
 
